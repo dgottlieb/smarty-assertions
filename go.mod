@@ -1,3 +1,3 @@
-module github.com/smarty/assertions
+module github.com/dgottlieb/assertions
 
 go 1.22
