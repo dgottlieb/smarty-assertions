@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/smarty/assertions/internal/go-render/render"
+	"github.com/dgottlieb/smarty-assertions/internal/go-render/render"
 )
 
 // ShouldEqual receives exactly two parameters and does an equality check

@@ -3,7 +3,7 @@ package assertions
 import (
 	"fmt"
 
-	"github.com/smarty/assertions/internal/oglematchers"
+	"github.com/dgottlieb/smarty-assertions/internal/oglematchers"
 )
 
 // ShouldBeGreaterThan receives exactly two parameters and ensures that the first is greater than the second.

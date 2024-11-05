@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/smarty/assertions/internal/go-render/render"
+	"github.com/dgottlieb/smarty-assertions/internal/go-render/render"
 )
 
 type Serializer interface {
