@@ -8,8 +8,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/smartystreets/assertions/internal/go-render/render"
-	"github.com/smartystreets/assertions/internal/oglematchers"
+	"github.com/dgottlieb/smarty-assertions/internal/go-render/render"
+	"github.com/dgottlieb/smarty-assertions/internal/oglematchers"
 )
 
 // ShouldEqual receives exactly two parameters and does an equality check

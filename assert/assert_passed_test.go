@@ -3,8 +3,8 @@ package assert
 import (
 	"testing"
 
-	"github.com/smartystreets/assertions/internal/unit"
-	"github.com/smartystreets/assertions/should"
+	"github.com/dgottlieb/smarty-assertions/internal/unit"
+	"github.com/dgottlieb/smarty-assertions/should"
 )
 
 func TestPassedResultFixture(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/smartystreets/assertions/internal/unit"
+	"github.com/dgottlieb/smarty-assertions/internal/unit"
 )
 
 /**************************************************************************/
