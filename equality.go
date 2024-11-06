@@ -23,21 +23,30 @@ func ShouldEqual(actual interface{}, expected ...interface{}) string {
 	}
 	return shouldEqual(actual, expected[0])
 }
-func shouldEqual(actual, expected interface{}) (message string) {
+
+func isEqual(actual, expected interface{}) (isEqual bool) {
 	defer func() {
 		if r := recover(); r != nil {
-			message = serializer.serialize(expected, actual, composeEqualityMismatchMessage(expected, actual))
+			isEqual = false
 		}
 	}()
 
 	if spec := newEqualityMethodSpecification(expected, actual); spec.IsSatisfied() && spec.AreEqual() {
-		return success
+		return true
 	} else if matchError := oglematchers.Equals(expected).Matches(actual); matchError == nil {
-		return success
+		return true
 	}
 
+	return false
+}
+
+func shouldEqual(actual, expected interface{}) (message string) {
+	if isEqual(actual, expected) {
+		return success
+	}
 	return serializer.serialize(expected, actual, composeEqualityMismatchMessage(expected, actual))
 }
+
 func composeEqualityMismatchMessage(expected, actual interface{}) string {
 	var (
 		renderedExpected = fmt.Sprintf("%v", expected)
@@ -53,9 +62,21 @@ func composeEqualityMismatchMessage(expected, actual interface{}) string {
 	}
 }
 
+func ShouldNotEqual(actual interface{}, expected ...interface{}) string {
+	if message := need(1, expected); message != success {
+		return message
+	}
+
+	if isEqual(actual, expected[0]) {
+		return fmt.Sprintf(shouldNotHaveBeenEqual, actual, expected[0])
+	}
+
+	return success
+}
+
 // ShouldNotEqual receives exactly two parameters and does an inequality check.
 // See ShouldEqual for details on how equality is determined.
-func ShouldNotEqual(actual interface{}, expected ...interface{}) string {
+func ShouldNotEqualOld(actual interface{}, expected ...interface{}) string {
 	if fail := need(1, expected); fail != success {
 		return fail
 	} else if ShouldEqual(actual, expected[0]) == success {
@@ -278,10 +299,11 @@ func interfaceHasNilValue(actual interface{}) bool {
 func ShouldNotBeNil(actual interface{}, expected ...interface{}) string {
 	if fail := need(0, expected); fail != success {
 		return fail
-	} else if ShouldBeNil(actual) == success {
-		return fmt.Sprintf(shouldNotHaveBeenNil, actual)
+	} else if actual != nil {
+		return success
 	}
-	return success
+
+	return fmt.Sprintf(shouldNotHaveBeenNil, actual)
 }
 
 // ShouldBeTrue receives a single parameter and ensures that it is true.

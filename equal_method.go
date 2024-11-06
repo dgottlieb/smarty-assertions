@@ -1,6 +1,8 @@
 package assertions
 
-import "reflect"
+import (
+	"reflect"
+)
 
 type equalityMethodSpecification struct {
 	a interface{}

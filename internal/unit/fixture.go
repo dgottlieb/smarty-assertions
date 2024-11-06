@@ -62,8 +62,8 @@ func (this *Fixture) So(actual interface{}, assert assertion, expected ...interf
 }
 
 func (this *Fixture) fail(failure string) {
-	this.t.Fail()
 	this.Print(failure)
+	this.t.FailNow()
 }
 
 // Assert tests a boolean which, if not true, marks the current test case as failed and
