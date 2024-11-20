@@ -6,6 +6,29 @@ import (
 	"time"
 )
 
+type Foo struct{}
+
+func (this *AssertionsFixture) TestDanBrokeThings() {
+	this.fail(so(nil, ShouldNotBeNil), "Expected '<nil>' to NOT be nil (but it was)!")
+	this.pass(so(nil, ShouldBeNil))
+
+	var foo *Foo = nil
+	this.fail(so(foo, ShouldNotBeNil), "Expected '<nil>' to NOT be nil (but it was)!")
+	this.pass(so(foo, ShouldBeNil))
+
+	foo = &Foo{}
+	this.pass(so(foo, ShouldNotBeNil))
+	this.fail(so(foo, ShouldBeNil), "Expected: nil Actual: '&{}'") // The case missing from existing tests.
+
+	var fooAny interface{} = foo // not nil
+	this.pass(so(fooAny, ShouldNotBeNil))
+	this.fail(so(fooAny, ShouldBeNil), "Expected: nil Actual: '&{}'")
+
+	fooAny = nil // not nil
+	this.fail(so(fooAny, ShouldNotBeNil), "Expected '<nil>' to NOT be nil (but it was)!")
+	this.pass(so(fooAny, ShouldBeNil))
+}
+
 func (this *AssertionsFixture) TestShouldEqual() {
 	this.fail(so(1, ShouldEqual), "This assertion requires exactly 1 comparison values (you provided 0).")
 	this.fail(so(1, ShouldEqual, 1, 2), "This assertion requires exactly 1 comparison values (you provided 2).")
@@ -299,6 +322,9 @@ func (this *AssertionsFixture) TestShouldNotBeNil() {
 	this.fail(so(thing, ShouldNotBeNil), "Expected '<nil>' to NOT be nil (but it was)!")
 	thing = &ThingImplementation{}
 	this.pass(so(thing, ShouldNotBeNil))
+
+	var thingOne *Thing1
+	this.fail(so(thingOne, ShouldNotBeNil), "Expected '<nil>' to NOT be nil (but it was)!")
 }
 
 func (this *AssertionsFixture) TestShouldBeTrue() {
